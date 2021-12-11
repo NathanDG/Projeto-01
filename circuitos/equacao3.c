@@ -2,27 +2,28 @@
 #include <stdlib.h>
 #include <string.h>
 
+//declara as funções
 void input(char y[], int qual);
 int stoi(char x[]);
 int concatena(int c, int d, int u);
 int determinante();
 void inv();
 void result();
-int h = 0;
 
 //                   01234567891123456789212345678
 char equacao[30] = {"-67.i1-51.i2-58.i3=84"};
 
-//corrente[equacao1,2,3,][I1,2,3,tensao];
-int pos[2], posn = 0, I[3][3], U[3];
+//I[equacao1,2,3,][I1,2,3], u[equacao];
+int pos[2], posn = 0, I[3][3], U[3], h = 0;
 
-
+//variaveis para calculo de determinante;
 int dp=0, ds=0, dr=0, det=0;
+//variaveis para multiplicação de matrizes;
 long double x[3][3], a[3][1], d[3][3];
 
 void main()
 {
-    char equacao[100] = "2.i1 + 3.i2 + 1.i3 = 0";
+    char equacao[100];
 
     //inserindo as equacoes;
     printf("Seguir o modelo:  2.i1 + 3.i2 + 1.i3 = 0\n\n");
@@ -35,48 +36,46 @@ void main()
 
     //montando matrizes;
     //matriz A;
-    puts("\n Matriz A");
-    for (int x = 0; x < 3; x++)
-    {
-        for (int j = 0; j < 3; j++)
-        {
-            printf("\t%d", I[x][j]);
-            printf("\tA[%d][%d]", x, j);
-        }
-        puts("");
-    }
-    puts("");
+    // puts("\n Matriz A");
+    // for (int x = 0; x < 3; x++)
+    // {
+    //     for (int j = 0; j < 3; j++)
+    //     {
+    //         printf("\t%d", I[x][j]);
+    //         printf("\tA[%d][%d]", x, j);
+    //     }
+    //     puts("");
+    // }
+    // puts("");
 
-    //matriz B;
-    puts("\nMatriz B");
-    for (int x = 0; x < 3; x++)
-    {
-        printf("\t%d", U[x]);
-        printf("\tU[%d]", x);
-        puts("");
-    } 
+    // //matriz B;
+    // puts("\nMatriz B");
+    // for (int x = 0; x < 3; x++)
+    // {
+    //     printf("\t%d", U[x]);
+    //     printf("\tU[%d]", x);
+    //     puts("");
+    // } 
 
     //calcula o determinante
     determinante();
-    printf("%d", determinante());
+    //printf("\ndeterminante %d\n", determinante());
+
     //inverte a matriz
     inv();
+
+    //imprime a matriz inversa na tela
+    //printf("Matriz Inversa");
+    //puts("");
+    // for(int j = 0; j < 3; j++)
+    // {
+    //     for (int i = 0; i < 3; i++)
+    //     printf("\t%Lf", d[j][i]);
+    //     puts("");
+    // }
+    // puts("");
     
-    puts("");
-    printf("Determinante: %d", determinante());
-    printf("\n\n");
-
-    //imprime a matriz na tela
-    printf("Matriz Inversa");
-    puts("");
-    for(int j = 0; j < 3; j++)
-    {
-        for (int i = 0; i < 3; i++)
-        printf("\t%Lf", d[j][i]);
-        puts("");
-    }
-    puts("");
-
+    //mostra o resultado;
     printf("\nResultado:");
     result(); 
     
@@ -111,6 +110,7 @@ void inv()
     d[2][2] = ((I[0][0] * I[1][1]) - (I[0][1] * I[1][0]))/det; 
 }
 
+//captura os dados da string para variaveis;
 void input(char y[], int qual)
 {
     //contador que define I:1,2,3 na matriz;
@@ -235,6 +235,7 @@ int stoi(char *x)
     
 }
 
+//concatena int de 3 digitos;
 int concatena(int c, int d, int u){
 
     int r;
@@ -244,6 +245,7 @@ int concatena(int c, int d, int u){
     return r;
 }
 
+//multiplica as matriz;
 void result()
 {
     a[0][0] = (d[0][0] * U[0]) + (d[0][1] * U[1]) + (d[0][2] * U[2]);
