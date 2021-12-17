@@ -1,6 +1,7 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
+#include "biblioteca.h"
 
 //declara as funções
 void input(char y[], int qual);
@@ -10,23 +11,17 @@ int determinante();
 void inv();
 void result();
 
-//                   01234567891123456789212345678
-char equacao[30] = {"-67.i1-51.i2-58.i3=84"};
-
 //I[equacao1,2,3,][I1,2,3], u[equacao];
-int pos[2], posn = 0, I[3][3], U[3], h = 0;
+static int pos[2], posn = 0, I[3][3], U[3], h = 0;
 
-//variaveis para calculo de determinante;
-int dp=0, ds=0, dr=0, det=0;
-//variaveis para multiplicação de matrizes;
-long double x[3][3], a[3][1], d[3][3];
+//variaveis para multiplicação e inversão de matrizes;
+static long double x[3][3], a[3][1], d[3][3];
 
-void main()
-{
-    char equacao[100];
-
+int equacao3(){
+    
+    char equacao[50] = {"-67.i1-51.i2-58.i3=84"};
     //inserindo as equacoes;
-    printf("Seguir o modelo:  2.i1 + 3.i2 + 1.i3 = 0\n\n");
+    printf("Seguir o modelo:  +20.i1+304.i2-1.i3=+9\n\n");
     for (int i = 0; i < 3; i++)
     {
         printf("Informe a equacao - %d: ", i+1);
@@ -34,57 +29,23 @@ void main()
         input(equacao, i);
     }
 
-    //montando matrizes;
-    //matriz A;
-    // puts("\n Matriz A");
-    // for (int x = 0; x < 3; x++)
-    // {
-    //     for (int j = 0; j < 3; j++)
-    //     {
-    //         printf("\t%d", I[x][j]);
-    //         printf("\tA[%d][%d]", x, j);
-    //     }
-    //     puts("");
-    // }
-    // puts("");
-
-    // //matriz B;
-    // puts("\nMatriz B");
-    // for (int x = 0; x < 3; x++)
-    // {
-    //     printf("\t%d", U[x]);
-    //     printf("\tU[%d]", x);
-    //     puts("");
-    // } 
-
     //calcula o determinante
     determinante();
-    //printf("\ndeterminante %d\n", determinante());
 
     //inverte a matriz
     inv();
-
-    //imprime a matriz inversa na tela
-    //printf("Matriz Inversa");
-    //puts("");
-    // for(int j = 0; j < 3; j++)
-    // {
-    //     for (int i = 0; i < 3; i++)
-    //     printf("\t%Lf", d[j][i]);
-    //     puts("");
-    // }
-    // puts("");
     
     //mostra o resultado;
     printf("\nResultado:");
     result(); 
-    
+    return 1;
 }
 
 //calcula a determinante;
 int determinante()
-{  
-   //multiplicacao da diagonal principal
+{ 
+    int dp=0, ds=0, dr=0, det=0;
+    //multiplicacao da diagonal principal
     dp=(I[0][0]*I[1][1]*I[2][2]) + (I[0][1]*I[1][2]*I[2][0]) + (I[0][2]*I[1][0]*I[2][1]);
     //multiplica diagonal secund�ria
     ds=(I[0][2]*I[1][1]*I[2][0]) + (I[0][0]*I[1][2]*I[2][1]) + (I[0][1]*I[1][0]*I[2][2]);
@@ -92,6 +53,7 @@ int determinante()
     dr=dp-ds;
     return dr;
 } 
+
 //inverte a matriz
 void inv()
 {

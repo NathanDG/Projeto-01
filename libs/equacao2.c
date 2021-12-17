@@ -1,6 +1,7 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
+#include "biblioteca.h"
 
 void inv();
 int determinante();
@@ -10,12 +11,12 @@ int concatena(int c, int d, int u);
 int stoi(char *x);
 
 
-int pos[2], posn = 0, I[2][2], U[2], h = 0;
-long double x[2][2], a[1][2];
+static int pos[2], posn = 0, I[2][2], U[2], h = 0;
+static long double x[2][2], a[1][2];
 
 
 
-void main(){
+int equacao2(){
 
     system("clear");
     char string[100] = "13.i1+05.i2=5";
@@ -30,47 +31,23 @@ void main(){
         input(string, i);
     }
 
-    //matriz A;
-    puts("\n Matriz A");
-    for (int x = 0; x < 2; x++)
-    {
-        for (int j = 0; j < 2; j++)
-        {
-            printf("\t%d", I[x][j]);
-            printf("\tA[%d][%d]", x, j);
-        }
-        puts("");
-    }
-    puts("");
-
-    //matriz B;
-    puts("\nMatriz B");
-    for (int x = 0; x < 2; x++)
-    {
-        printf("\t%d", U[x]);
-        printf("\tU[%d]", x);
-        puts("");
-    } 
-
-
     //Calculo de determinante;
     determinante(I);
 
-    //imprimindo Matriz inversa;
-       
+    //Matriz inversa;  
     inv();
-
     printf("\nResultado:");
-    result();   
+    result();
+    return 1;
 }
 
-//calcula a determinante;
+//calcula a determinante 2x2;
 int determinante()
 {  
    return (I[1][1]*I[0][0])-(I[1][0]*I[0][1]);
 }
 
-//inverte a matriz;
+//inverte a matriz 2x2;
 void inv()
 {
     float temp[2][2], det = determinante();
@@ -89,6 +66,7 @@ void inv()
     x[1][0] = (temp[1][0]*-1);
 }
 
+//multiplica 2x2
 void result()
 {
     a[0][0] = (x[0][0] * U[0]) + (x[0][1]*U[1]);
@@ -101,6 +79,7 @@ void result()
 
     printf("\n");
 }
+
 
 void input(char y[], int qual)
 {
