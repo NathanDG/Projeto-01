@@ -1,6 +1,12 @@
-#ifndef _BIBLIOTECA_H
-#define _BIBLIOTECA_H
+#ifndef _LIBS_TECA_H
+#define _LIBS_TECA_H
 
-int equacao3(void);
+//defines e protótipos da biblioteca
+void testa();
+int concatena(int c, int d, int u);
+int stoi(char *x);
+int equacao3();
+int equacao2();
 
-#endif
+
+#endif 

@@ -1,51 +1,57 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include "biblioteca.h"
 
 //declara as funções
-void input(char y[], int qual);
-int stoi(char x[]);
-int concatena(int c, int d, int u);
-int determinante();
-void inv();
-void result();
+void input3(char y[], int qual);
+int stoi3(char x[]);
+int determinante3();
+void inv3();
+void result3();
+
+//                   01234567891123456789212345678
+static char equacao[30] = {"-67.i1-51.i2-58.i3=84"};
 
 //I[equacao1,2,3,][I1,2,3], u[equacao];
 static int pos[2], posn = 0, I[3][3], U[3], h = 0;
 
-//variaveis para multiplicação e inversão de matrizes;
+//variaveis para calculo de determinante;
+static int dp=0, ds=0, dr=0, det=0;
+//variaveis para multiplicação de matrizes;
 static long double x[3][3], a[3][1], d[3][3];
+
+
 
 int equacao3(){
     
-    char equacao[50] = {"-67.i1-51.i2-58.i3=84"};
+    char equacao[100];
+
     //inserindo as equacoes;
-    printf("Seguir o modelo:  +20.i1+304.i2-1.i3=+9\n\n");
+    printf("Seguir o modelo:  -2.i1+3.i2+1.i3=+0\n\n");
+    getchar();
+    
     for (int i = 0; i < 3; i++)
     {
         printf("Informe a equacao - %d: ", i+1);
         fgets(equacao, sizeof(equacao)-2, stdin);
-        input(equacao, i);
+        input3(equacao, i);
     }
 
     //calcula o determinante
-    determinante();
+    determinante3();
 
     //inverte a matriz
-    inv();
-    
-    //mostra o resultado;
+    inv3();
+
     printf("\nResultado:");
-    result(); 
-    return 1;
+    result3(); 
+    
 }
 
 //calcula a determinante;
-int determinante()
-{ 
-    int dp=0, ds=0, dr=0, det=0;
-    //multiplicacao da diagonal principal
+int determinante3()
+{  
+   //multiplicacao da diagonal principal
     dp=(I[0][0]*I[1][1]*I[2][2]) + (I[0][1]*I[1][2]*I[2][0]) + (I[0][2]*I[1][0]*I[2][1]);
     //multiplica diagonal secund�ria
     ds=(I[0][2]*I[1][1]*I[2][0]) + (I[0][0]*I[1][2]*I[2][1]) + (I[0][1]*I[1][0]*I[2][2]);
@@ -53,11 +59,10 @@ int determinante()
     dr=dp-ds;
     return dr;
 } 
-
 //inverte a matriz
-void inv()
+void inv3()
 {
-    float temp[3][3], det = determinante();
+    float temp[3][3], det = determinante3();
     //calculo da matriz inversa
     d[0][0] = ((I[1][1] * I[2][2]) - (I[1][2] * I[2][1]))/det;
     d[0][1] = ((I[2][1] * I[0][2]) - (I[2][2] * I[0][1]))/det;
@@ -73,7 +78,7 @@ void inv()
 }
 
 //captura os dados da string para variaveis;
-void input(char y[], int qual)
+void input3(char y[], int qual)
 {
     //contador que define I:1,2,3 na matriz;
     int contador = 0;
@@ -116,10 +121,10 @@ void input(char y[], int qual)
             temp[pos[1]] = '\0';
                  
             //transforma de sting para int;
-            I[qual][contador-1] = stoi(temp);
+            I[qual][contador-1] = stoi3(temp);
 
             //printf("\nqual = %d, contador = %d", qual, contador);
-            //printf("\n I[%d][%d] = %d\n", qual, contador-1, stoi(temp));
+            //printf("\n I[%d][%d] = %d\n", qual, contador-1, stoi3(temp));
         }
 
         //procura por '=';
@@ -146,8 +151,8 @@ void input(char y[], int qual)
 
             x[marcador] = '\0';
 
-            //chama stoi(x), para transformar em int[];
-            U[qual] = stoi(x);
+            //chama stoi3(x), para transformar em int[];
+            U[qual] = stoi3(x);
         }
         
     }    
@@ -155,7 +160,7 @@ void input(char y[], int qual)
 }
 
 // Transforma de string para int "char x[], é um ponteiro";
-int stoi(char *x)
+int stoi3(char *x)
 {
     
     //inicializa variaveis;
@@ -197,18 +202,9 @@ int stoi(char *x)
     
 }
 
-//concatena int de 3 digitos;
-int concatena(int c, int d, int u){
-
-    int r;
-    r = c * 100; //centena;
-    r = r + (d*10);//dezena;
-    r = r + u;//unidade;
-    return r;
-}
 
 //multiplica as matriz;
-void result()
+void result3()
 {
     a[0][0] = (d[0][0] * U[0]) + (d[0][1] * U[1]) + (d[0][2] * U[2]);
     a[0][1] = (d[1][0] * U[0]) + (d[1][1] * U[1]) + (d[1][2] * U[2]);
