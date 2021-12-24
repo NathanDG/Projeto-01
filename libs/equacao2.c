@@ -58,7 +58,7 @@ int equacao2(){
        
     inv();
 
-    printf("\nResultado:");
+    printf("\nResultado:\n");
     result();   
 }
 

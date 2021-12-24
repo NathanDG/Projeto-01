@@ -8,6 +8,7 @@ int stoi3(char x[]);
 int determinante3();
 void inv3();
 void result3();
+int validaEquacao(char x[]);
 
 //                   01234567891123456789212345678
 static char equacao[30] = {"-67.i1-51.i2-58.i3=84"};
@@ -25,16 +26,24 @@ static long double x[3][3], a[3][1], d[3][3];
 int equacao3(){
     
     char equacao[100];
-
+    system("clear");
     //inserindo as equacoes;
-    printf("Seguir o modelo:  -2.i1+3.i2+1.i3=+0\n\n");
+    printf("Seguir o modelo: sinal(+-)numero(0-999).isinal(+)numero(0-999).i2sinal(+-)numero(0-999).i3=sinal(+-)numero(0-999).isinal(+)numero(0-999)");
+    printf("\nexemplo: -1.i1+2.i2-23.i3=+0\nPrecione enter:");
     getchar();
-    
+
     for (int i = 0; i < 3; i++)
     {
-        printf("Informe a equacao - %d: ", i+1);
-        fgets(equacao, sizeof(equacao)-2, stdin);
+        int valida = 0;
+        while (valida == 0)
+        {
+            printf("Informe a equacao - %d: ", i+1);
+            fgets(equacao, sizeof(equacao)-2, stdin);
+            
+            valida = validaEquacao(equacao);
+        }
         input3(equacao, i);
+       
     }
 
     //calcula o determinante
@@ -46,6 +55,61 @@ int equacao3(){
     printf("\nResultado:");
     result3(); 
     
+}
+
+//Se a expressão apresentar erros pede que a insira novamente.
+int validaEquacao(char x[]){
+
+    int tamanho = 0, ponto = 0, sinal = 0;
+    tamanho = strlen(x);
+    
+    for (int i = 0; i < tamanho; i++)
+    {
+        //conta a quantidade de pontos;
+        if (x[i] == '.' && x[i+1] != '.' && x[i-1] != '.')
+        {
+            ponto++;
+        }     
+
+        //conta a quantidade dos sinais;
+        if (x[i] == '+' || x[i] == '-')
+        {
+            sinal++;
+        }
+       
+
+        //procura por espaços;
+        if (x[i] == ' ')
+        {
+            printf("Equação invalida, não coloque espaço!\n");
+            return 0;
+        }
+        
+           
+    }
+
+    //verifica se a quantidade de ponto achado é igual a 3;
+    if (ponto != 3)
+    {
+        printf("Equação invalida!\n");
+        return 0;
+    }
+
+    //verifica se a quantidade de sinal achado é igual a 4;
+    if (sinal != 4)
+    {
+         printf("Equação invalida, não esqueça dos sinais(+-) antes de cada numero!\n");
+        return 0;
+    }    
+    
+    //verifica se o codigo é muito pequeno ou muito grande;
+    if (tamanho <= 18 || tamanho >=  28)
+    {
+        printf("Equação invalida!\n");
+        return 0;
+    }
+    return 1;
+
 }
 
 //calcula a determinante;
