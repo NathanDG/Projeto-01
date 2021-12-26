@@ -7,6 +7,7 @@ int determinante();
 void result();
 void input(char y[], int qual);
 int stoi(char *x);
+int validaEquacao2(char x[]);
 
 static int pos[2], posn = 0, I[2][2], U[2], h = 0;
 static long double x[2][2], a[1][2];
@@ -18,49 +19,107 @@ int equacao2(){
 
     //inserindo as equacoes;
     printf("Seguir o modelo: +23.i1-06.i2=+00\n\n");
-    //printf("Pressione enter:");
     //getchar();
 
     for (int i = 0; i < 2; i++)
     {
-        printf("Informe a equacao%d: ", i+1);
-        fgets(string, sizeof(string)-2, stdin);
-        input(string, i);
-    }
-
-    //matriz A;
-    puts("\n Matriz A");
-    for (int x = 0; x < 2; x++)
-    {
-        for (int j = 0; j < 2; j++)
+        int valida = 0;
+        while (valida == 0)
         {
-            printf("\t%d", I[x][j]);
-            printf("\tA[%d][%d]", x, j);
+            printf("Informe a equacao - %d: ", i+1);
+            fgets(string, sizeof(string)-2, stdin);
+            
+            valida = validaEquacao2(string);
         }
-        puts("");
-    }
-    puts("");
+        input(string, i);
+    
+        }
+    // //matriz A;
+    // puts("\n Matriz A");
+    // for (int x = 0; x < 2; x++)
+    // {
+    //     for (int j = 0; j < 2; j++)
+    //     {
+    //         printf("\t%d", I[x][j]);
+    //         printf("\tA[%d][%d]", x, j);
+    //     }
+    //     puts("");
+    // }
+    // puts("");
 
-    //matriz B;
-    puts("\nMatriz B");
-    for (int x = 0; x < 2; x++)
-    {
-        printf("\t%d", U[x]);
-        printf("\tU[%d]", x);
-        puts("");
-    } 
-
+    // //matriz B;
+    // puts("\nMatriz B");
+    // for (int x = 0; x < 2; x++)
+    // {
+    //     printf("\t%d", U[x]);
+    //     printf("\tU[%d]", x);
+    //     puts("");
+    // } 
 
     //Calculo de determinante;
     determinante(I);
 
     //imprimindo Matriz inversa;
-       
     inv();
 
     printf("\nResultado:\n");
     result();   
 }
+
+int validaEquacao2(char x[]){
+
+    int tamanho = 0, ponto = 0, sinal = 0;
+    tamanho = strlen(x);
+    printf("%d", tamanho);
+    for (int i = 0; i < tamanho; i++)
+    {
+        //conta a quantidade de pontos;
+        if (x[i] == '.' && x[i+1] != '.' && x[i-1] != '.')
+        {
+            ponto++;
+        }     
+
+        //conta a quantidade dos sinais;
+        if (x[i] == '+' || x[i] == '-')
+        {
+            sinal++;
+        }
+       
+
+        //procura por espaços;
+        if (x[i] == ' ')
+        {
+            printf("Equação invalida, não coloque espaço!\n");
+            return 0;
+        }
+        
+           
+    }
+
+    //verifica se a quantidade de ponto achado é igual a 3;
+    if (ponto != 2)
+    {
+        printf("Equação invalida!\n");
+        return 0;
+    }
+
+    //verifica se a quantidade de sinal achado é igual a 4;
+    if (sinal != 3)
+    {
+         printf("Equação invalida, não esqueça dos sinais(+-) antes de cada numero!\n");
+        return 0;
+    }    
+    
+    //verifica se o codigo é muito pequeno ou muito grande;
+    if (tamanho <= 15 || tamanho >=  21)
+    {
+        printf("Equação invalida, divergencia no tamanho!\n");
+        return 0;
+    }
+    return 1;
+
+}
+
 
 //calcula a determinante;
 int determinante()
