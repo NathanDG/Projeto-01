@@ -33,17 +33,18 @@ int equacao3(){
     printf("\nexemplo: -1.i1+2.i2-23.i3=+0\n");
     //getchar();
 
+    //insirindo as equações;
     for (int i = 0; i < 3; i++)
     {
-        int valida = 0;
-        while (valida == 0)
+        int valida = 0;//varivel que define se equacao é valido;
+        while (valida == 0)//enquanto equacao não dor valida;
         {
             printf("Informe a equacao - %d: ", i+1);
             fgets(equacao, sizeof(equacao)-2, stdin);
             
-            valida = validaEquacao(equacao);
+            valida = validaEquacao(equacao);//testa se equacao é valida e armazena em valida;
         }
-        input3(equacao, i);
+        input3(equacao, i);//chama a função que captura os dados da string;
        
     }
 
@@ -171,19 +172,19 @@ void input3(char y[], int qual)
             }
 
             posn = pos[0] - pos[1];//define a posição incial do que achou;
-
             //printf("\npos[0] = %d;\n pos[1] = %d\n posf = %d\n x = %d\n", pos[0], pos[1], posn, strlen(y)-posn);
 
             //inicializa variavel temporaria que armazena char que será transformado em int;
             char temp[pos[1]+1];
 
-            //define com as posições que achou;
+            //define temp com as posições que achou;
             for (int k = posn; k < posn + pos[1]; k++)
             {
                 temp[k-posn] = y[k];
                 //printf("\n\ttemp[%d] = %c", k-posn, y[k]);
             }
 
+            //fecha a string;
             temp[pos[1]] = '\0';
                  
             //transforma de sting para int;
@@ -207,7 +208,7 @@ void input3(char y[], int qual)
             //printa quantas posiçoes foram criadas no vetor x;
             //printf("\nX tem[%d]\n", marcador);
 
-            //define x;
+            //define x com os valores apos '=';
             for (int j = 0; j < marcador; j++)
             {
                 //printf("\n temp[%d] = %c\n", j, y[i+j]);
@@ -215,6 +216,7 @@ void input3(char y[], int qual)
 
             }
 
+            //fecha a string;
             x[marcador] = '\0';
 
             //chama stoi3(x), para transformar em int[];

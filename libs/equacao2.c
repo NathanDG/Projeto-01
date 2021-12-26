@@ -15,7 +15,7 @@ static long double x[2][2], a[1][2];
 int equacao2(){
 
     system("clear");
-    char string[100] = "13.i1+05.i2=5";
+    char string[100];
 
     //inserindo as equacoes;
     printf("Seguir o modelo: +23.i1-06.i2=+00\n\n");
