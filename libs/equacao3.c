@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "biblioteca.h"
 
 //declara as funções
 void input3(char y[], int qual);
@@ -28,9 +29,9 @@ int equacao3(){
     char equacao[100];
     system("clear");
     //inserindo as equacoes;
-    printf("Seguir o modelo: sinal(+-)numero(0-999).isinal(+)numero(0-999).i2sinal(+-)numero(0-999).i3=sinal(+-)numero(0-999).isinal(+)numero(0-999)");
-    printf("\nexemplo: -1.i1+2.i2-23.i3=+0\nPrecione enter:");
-    getchar();
+    printf("Como usar: sinal(+-)numero(0-999).i1sinal(+-)numero(0-999).i2sinal(+-)numero(0-999).i3=sinal(+-)numero(0-999)\n");
+    printf("\nexemplo: -1.i1+2.i2-23.i3=+0\n");
+    //getchar();
 
     for (int i = 0; i < 3; i++)
     {

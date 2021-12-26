@@ -2,7 +2,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-
 void inv();
 int determinante();
 void result();
@@ -19,7 +18,8 @@ int equacao2(){
 
     //inserindo as equacoes;
     printf("Seguir o modelo: +23.i1-06.i2=+00\n\n");
-    getchar();
+    //printf("Pressione enter:");
+    //getchar();
 
     for (int i = 0; i < 2; i++)
     {
