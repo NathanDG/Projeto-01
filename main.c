@@ -7,8 +7,6 @@
 #define BLUE      "\033[34m"
 #define RESET     "\033[34m"
 
-
-
 int main() {
    
     int c1,c2,x = 0;

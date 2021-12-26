@@ -115,15 +115,16 @@ int validaEquacao(char x[]){
 //calcula a determinante;
 int determinante3()
 {  
-   //multiplicacao da diagonal principal
+   //multiplicacao da diagonal principal;
     dp=(I[0][0]*I[1][1]*I[2][2]) + (I[0][1]*I[1][2]*I[2][0]) + (I[0][2]*I[1][0]*I[2][1]);
-    //multiplica diagonal secund�ria
+    //multiplica diagonal secundaria;
     ds=(I[0][2]*I[1][1]*I[2][0]) + (I[0][0]*I[1][2]*I[2][1]) + (I[0][1]*I[1][0]*I[2][2]);
-    //determinante
+    //determinante;
     dr=dp-ds;
     return dr;
 } 
-//inverte a matriz
+
+//inverte a matriz;
 void inv3()
 {
     float temp[3][3], det = determinante3();
