@@ -64,6 +64,7 @@ int validaEquacao(char x[]){
 
     int tamanho = 0, ponto = 0, sinal = 0;
     tamanho = strlen(x);
+    printf("%d", tamanho);
     
     for (int i = 0; i < tamanho; i++)
     {
@@ -105,7 +106,7 @@ int validaEquacao(char x[]){
     }    
     
     //verifica se o codigo é muito pequeno ou muito grande;
-    if (tamanho <= 18 || tamanho >=  28)
+    if (tamanho <= 19 || tamanho >=  28)
     {
         printf("Equação invalida!\n");
         return 0;

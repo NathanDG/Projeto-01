@@ -70,7 +70,7 @@ int validaEquacao2(char x[]){
 
     int tamanho = 0, ponto = 0, sinal = 0;
     tamanho = strlen(x);
-    printf("%d", tamanho);
+    
     for (int i = 0; i < tamanho; i++)
     {
         //conta a quantidade de pontos;
