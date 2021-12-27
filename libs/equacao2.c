@@ -8,6 +8,7 @@ void result();
 void input(char y[], int qual);
 int stoi(char *x);
 int validaEquacao2(char x[]);
+void log2();
 
 static int pos[2], posn = 0, I[2][2], U[2], h = 0;
 static long double x[2][2], a[1][2];
@@ -18,8 +19,8 @@ int equacao2(){
     char string[100];
 
     //inserindo as equacoes;
-    printf("Seguir o modelo: +23.i1-06.i2=+00\n\n");
-    //getchar();
+    printf("Como usar: sinal(+-)número(0-999).i1sinal(+-)número(0-999).i2=sinal(+-)número(0-999)\n");
+    printf("Exemplo: +23.i1-06.i2=+00\n\n");
 
     for (int i = 0; i < 2; i++)
     {
@@ -33,37 +34,77 @@ int equacao2(){
         }
         input(string, i);
     
-        }
-    // //matriz A;
-    // puts("\n Matriz A");
-    // for (int x = 0; x < 2; x++)
-    // {
-    //     for (int j = 0; j < 2; j++)
-    //     {
-    //         printf("\t%d", I[x][j]);
-    //         printf("\tA[%d][%d]", x, j);
-    //     }
-    //     puts("");
-    // }
-    // puts("");
-
-    // //matriz B;
-    // puts("\nMatriz B");
-    // for (int x = 0; x < 2; x++)
-    // {
-    //     printf("\t%d", U[x]);
-    //     printf("\tU[%d]", x);
-    //     puts("");
-    // } 
+    }
+ 
 
     //Calculo de determinante;
-    determinante(I);
+    determinante();
 
-    //imprimindo Matriz inversa;
+    //Calcula Matriz inversa;
     inv();
 
     printf("\nResultado:\n");
     result();   
+    log2();
+}
+
+void log2(){
+
+    FILE *pfile;
+
+    pfile = fopen("Log_eq2.txt", "a");
+    if (pfile == NULL)
+    {
+        perror("Erro");
+        clearerr(pfile);
+    }
+
+    //matriz Correntes;
+    fprintf(pfile, "\n Matriz Corrente");
+    for (int x = 0; x < 2; x++)
+    {
+        for (int j = 0; j < 2; j++)
+        {
+            fprintf(pfile, "\t%d", I[x][j]);
+        }
+        fprintf(pfile, "\n");
+    }
+    fprintf(pfile, "\n");
+
+    //matriz Tensoes;
+    fprintf(pfile, "\n Matriz Tensão");
+    for (int x = 0; x < 2; x++)
+    {
+        fprintf(pfile, "\t%d", U[x]);
+        fprintf(pfile, "\n");
+    } 
+
+    //determinante;
+    fprintf(pfile, "\n Determinante: %d\n", determinante());
+
+    //Inversa matriz Correntes;
+    fprintf(pfile, "\n Matriz Inversa\n");
+    for (int i = 0; i < 2; i++)
+    {
+        for (int j = 0; j < 2; j++)
+        {
+            fprintf(pfile, "\t%Lf", x[i][j]);
+        }
+        fprintf(pfile, "\n");
+    }
+    
+    fprintf(pfile, "\n");
+
+    //resultado;
+    for (int i = 0; i < 2; i++)
+    {
+        fprintf(pfile,"\tCorrente %d = %Lf\n", i+1, a[0][i]);
+    }
+
+    fprintf(pfile, "-------------------------------------");
+    fprintf(pfile, "\n");
+    fclose(pfile);   
+
 }
 
 int validaEquacao2(char x[]){

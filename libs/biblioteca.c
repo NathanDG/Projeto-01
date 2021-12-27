@@ -3,12 +3,32 @@
 #include <stdlib.h>
 #include <string.h>
 
-void testa(){
+void AbreLog(){
 
-    printf("testando");
+    FILE *pfile;
+    FILE *pfile2;
 
+    pfile = fopen("Log_eq3.txt", "w");   
+    pfile2 = fopen("Log_eq2.txt", "w");
+
+    if (pfile == NULL)
+    {
+        perror("Erro");
+        clearerr(pfile);
+    }
+
+    if (pfile2 == NULL)
+    {
+        perror("Erro");
+        clearerr(pfile);
+    }
+    
+    fprintf(pfile, "--------------------Historico---------------------");
+    fprintf(pfile2, "--------------------Historico---------------------");
+
+    fclose(pfile2);
+    fclose(pfile);
 }
-
 
 //concatena int de 3 digitos;
 int concatena(int c, int d, int u){

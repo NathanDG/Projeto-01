@@ -7,6 +7,7 @@ int concatena(int c, int d, int u);
 int stoi(char *x);
 int equacao3();
 int equacao2();
+void AbreLog();
 
 
 #endif 

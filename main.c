@@ -8,12 +8,14 @@
 #define RESET     "\033[34m"
 
 int main() {
-    
+
+    AbreLog();
+
     int c1,c2,x = 0;
     
     while(x == 0){
 
-        system("clear");
+    system("clear");
     
     printf(" ============================================================\n");
     printf(" "RED"|---ESCOLHA UMA DAS ALTERNATIVAS A BAIXO!------------------|\n");
@@ -32,7 +34,7 @@ int main() {
     printf(" |-----------Qual opcão deseja fazer?---------------"RESET"--------|\n");
     printf(" ============================================================\n");
     scanf("%d", &c1);  
-    getchar();printf(" |----------------------------------------------------------|\n");  
+    getchar();
         
         switch(c1){
         

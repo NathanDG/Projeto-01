@@ -10,22 +10,19 @@ int determinante3();
 void inv3();
 void result3();
 int validaEquacao(char x[]);
+void log3();
 
-//                   01234567891123456789212345678
-static char equacao[30] = {"-67.i1-51.i2-58.i3=84"};
+static char equacao[30] = {"-67.i1-51.i2-58.i3=+84"};
 
 //I[equacao1,2,3,][I1,2,3], u[equacao];
 static int pos[2], posn = 0, I[3][3], U[3], h = 0;
-
 //variaveis para calculo de determinante;
 static int dp=0, ds=0, dr=0, det=0;
 //variaveis para multiplicação de matrizes;
 static long double x[3][3], a[3][1], d[3][3];
 
-
-
 int equacao3(){
-    
+
     char equacao[100];
     system("clear");
     //inserindo as equacoes;
@@ -37,7 +34,7 @@ int equacao3(){
     for (int i = 0; i < 3; i++)
     {
         int valida = 0;//varivel que define se equacao é valido;
-        while (valida == 0)//enquanto equacao não dor valida;
+        while (valida == 0)//enquanto equacao não for valida;
         {
             printf("Informe a equacao - %d: ", i+1);
             fgets(equacao, sizeof(equacao)-2, stdin);
@@ -56,7 +53,61 @@ int equacao3(){
 
     printf("\nResultado:");
     result3(); 
+    log3();
+}
+
+void log3(){
+
+    FILE *pfile;
+
+    pfile = fopen("Log_eq3.txt", "a");
+    if (pfile == NULL)
+    {
+        perror("Erro");
+        clearerr(pfile);
+    }
+
+    //Imprimindo no Log A Matriz I;
+    fprintf(pfile, "\n\nMatriz Corrente:\n");
+    for (int j = 0; j < 3; j++)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            fprintf(pfile, "\t\t\t\t%d", I[j][i]);
+        }
+        fprintf(pfile, "\n");        
+    }  
+
+    //imprimindo no Log a matriz U;
+    fprintf(pfile, "\nMatriz Tensão:\n");
+    for (int i = 0; i < 3; i++)
+    {
+        fprintf(pfile, "\t\t\t\t%d", U[i]);
+        fprintf(pfile, "\n");
+    }
     
+    //imprime determinante no log;
+    fprintf(pfile, "\nDeterminante: %d", determinante3());
+
+    //imprimindo Matriz inversa no Log;
+    fprintf(pfile, "\n\nMatriz Inversa:\n");
+    for (int j = 0; j < 3; j++)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            fprintf(pfile, "\t\t\t\t%Lf ", d[j][i]);
+        }
+        fprintf(pfile, "\n");     
+    } 
+    
+    fprintf(pfile, "\n");
+    fprintf(pfile,"Corrente %d = %Lf\n", 1, a[0][0]);
+    fprintf(pfile,"Corrente %d = %Lf\n", 2, a[0][1]);
+    fprintf(pfile,"Corrente %d = %Lf\n\n", 3, a[0][2]);
+
+    fprintf(pfile, "----------------------------------------");
+    fclose(pfile);    
+
 }
 
 //Se a expressão apresentar erros pede que a insira novamente.
@@ -64,7 +115,6 @@ int validaEquacao(char x[]){
 
     int tamanho = 0, ponto = 0, sinal = 0;
     tamanho = strlen(x);
-    printf("%d", tamanho);
     
     for (int i = 0; i < tamanho; i++)
     {
@@ -131,7 +181,9 @@ int determinante3()
 void inv3()
 {
     float temp[3][3], det = determinante3();
-    //calculo da matriz inversa
+
+    //calculo da matriz adjacente e inversa
+    //divide a adjacente pelo determinante resultando na inversa
     d[0][0] = ((I[1][1] * I[2][2]) - (I[1][2] * I[2][1]))/det;
     d[0][1] = ((I[2][1] * I[0][2]) - (I[2][2] * I[0][1]))/det;
     d[0][2] = ((I[0][1] * I[1][2]) - (I[0][2] * I[1][1]))/det;
