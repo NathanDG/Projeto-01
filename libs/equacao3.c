@@ -27,7 +27,7 @@ int equacao3(){
     system("clear");
     //inserindo as equacoes;
     printf("Como usar: sinal(+-)numero(0-999).i1sinal(+-)numero(0-999).i2sinal(+-)numero(0-999).i3=sinal(+-)numero(0-999)\n");
-    printf("\nexemplo: -1.i1+2.i2-23.i3=+0\n");
+    printf("exemplo: -1.i1+2.i2-23.i3=+0\n");
     //getchar();
 
     //insirindo as equações;
@@ -149,14 +149,14 @@ int validaEquacao(char x[]){
     }
 
     //verifica se a quantidade de sinal achado é igual a 4;
-    if (sinal != 4)
+    if (sinal != 3)
     {
          printf("Equação invalida, não esqueça dos sinais(+-) antes de cada numero!\n");
         return 0;
     }    
     
     //verifica se o codigo é muito pequeno ou muito grande;
-    if (tamanho <= 19 || tamanho >=  28)
+    if (tamanho <= 7 || tamanho >=  27)
     {
         printf("Equação invalida!\n");
         return 0;
@@ -249,14 +249,20 @@ void input3(char y[], int qual)
 
         //procura por '=';
         if (y[i] == '=')
-        { 
+        {
+            //h = posição depois do '=';
             h = i+1; 
+
+            if (y[h] != '+' && y[h] != '-')
+            {
+                h = i;
+            } 
             
             //marcador guardara o tamanho do char que chegou
             int marcador = (strlen(y)-h)-1;
 
             //inicializa variavel que armazena char que será transformado em int;
-            char x[marcador+1];
+            char x[marcador+1];            
             
             //printa quantas posiçoes foram criadas no vetor x;
             //printf("\nX tem[%d]\n", marcador);

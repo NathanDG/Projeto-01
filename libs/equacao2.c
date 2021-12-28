@@ -8,7 +8,7 @@ void result();
 void input(char y[], int qual);
 int stoi(char *x);
 int validaEquacao2(char x[]);
-void log2();
+void logeq2();
 
 static int pos[2], posn = 0, I[2][2], U[2], h = 0;
 static long double x[2][2], a[1][2];
@@ -45,10 +45,10 @@ int equacao2(){
 
     printf("\nResultado:\n");
     result();   
-    log2();
+    logeq2();
 }
 
-void log2(){
+void logeq2(){
 
     FILE *pfile;
 
@@ -145,14 +145,14 @@ int validaEquacao2(char x[]){
     }
 
     //verifica se a quantidade de sinal achado é igual a 4;
-    if (sinal != 3)
+    if (sinal != 2)
     {
          printf("Equação invalida, não esqueça dos sinais(+-) antes de cada numero!\n");
         return 0;
     }    
     
     //verifica se o codigo é muito pequeno ou muito grande;
-    if (tamanho <= 15 || tamanho >=  21)
+    if (tamanho <= 14 || tamanho >=  21)
     {
         printf("Equação invalida, divergencia no tamanho!\n");
         return 0;
@@ -252,13 +252,19 @@ void input(char y[], int qual)
         //procura por '=';
         if (y[i] == '=')
         { 
+            //h = posição depois do '=';
             h = i+1; 
+
+            if (y[h] != '+' && y[h] != '-')
+            {
+                h = i;
+            } 
             
             //marcador guardara o tamanho do char que chegou
             int marcador = (strlen(y)-h)-1;
 
             //inicializa variavel que armazena char que será transformado em int;
-            char x[marcador+1];
+            char x[marcador];
             
             //printa quantas posiçoes foram criadas no vetor x;
             //printf("\nX tem[%d]\n", marcador);

@@ -112,9 +112,10 @@ int main() {
                 printf(" ============================================================\n");
                 printf("Digite um ou dois !\n");
                 break;
-        }
+        }   
         
     }
     
-    
+   
 }
+//se a posição h não for 0 e nem 1 define o inicio do for como 0;

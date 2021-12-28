@@ -23,8 +23,8 @@ void AbreLog(){
         clearerr(pfile);
     }
     
-    fprintf(pfile, "--------------------Historico---------------------");
-    fprintf(pfile2, "--------------------Historico---------------------");
+    fprintf(pfile, "--------------------Histórico---------------------");
+    fprintf(pfile2, "--------------------Histórico---------------------");
 
     fclose(pfile2);
     fclose(pfile);
@@ -59,6 +59,7 @@ int stoi(char *x)
         teste[i] = x[i]-48;//faz a conversão de cada posição do vetor para int(faz se -48 por causa da tabela ascii);
         //printf("\n\t\tteste[%d] = %d\n", i, teste[i]);
     }
+
     if(strlen(x) == 2)//se x tiver 2, ou seja ser apenas 1 numero;
     {
         menos = concatena(0/*centena*/, 0/*dezena*/, teste[1]/*unidade*/);
