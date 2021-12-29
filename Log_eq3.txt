@@ -1,1 +1,47 @@
 --------------------Histórico---------------------
+
+Matriz Corrente:
+				1				2				3
+				-1				-2				-3
+				-12				-13				-14
+
+Matriz Tensão:
+				4
+				-4
+				-15
+
+Determinante: 0
+
+Matriz Inversa:
+				-inf 				-inf 				-nan 
+				inf 				inf 				-nan 
+				-inf 				-inf 				-nan 
+
+Corrente 1 = -nan
+Corrente 2 = -nan
+Corrente 3 = -nan
+
+----------------------------------------
+
+Matriz Corrente:
+				-999				-888				-777
+				999				888				777
+				-1				-1				-1
+
+Matriz Tensão:
+				-666
+				666
+				-1
+
+Determinante: 0
+
+Matriz Inversa:
+				-inf 				-inf 				-nan 
+				inf 				inf 				-nan 
+				-inf 				-inf 				-nan 
+
+Corrente 1 = -nan
+Corrente 2 = -nan
+Corrente 3 = -nan
+
+----------------------------------------

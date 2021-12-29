@@ -3,6 +3,12 @@
 #include <string.h>
 #include "biblioteca.h"
 
+#define RED       "\033[31m"
+#define YELLOW    "\033[33m"
+#define BLUE      "\033[34m"
+#define RESET     "\033[34m"
+#define GREEN     "\033[0;32m"
+
 //declara as funções
 void input3(char y[], int qual);
 int stoi3(char x[]);
@@ -12,7 +18,7 @@ void result3();
 int validaEquacao(char x[]);
 void log3();
 
-static char equacao[30] = {"-67.i1-51.i2-58.i3=+84"};
+static char equacao[30];
 
 //I[equacao1,2,3,][I1,2,3], u[equacao];
 static int pos[2], posn = 0, I[3][3], U[3], h = 0;
@@ -26,9 +32,9 @@ int equacao3(){
     char equacao[100];
     system("clear");
     //inserindo as equacoes;
-    printf("Como usar: sinal(+-)numero(0-999).i1sinal(+-)numero(0-999).i2sinal(+-)numero(0-999).i3=sinal(+-)numero(0-999)\n");
-    printf("exemplo: -1.i1+2.i2-23.i3=+0\n");
-    //getchar();
+    printf("============================================================\n");
+    printf("|"GREEN"---------------Exemplo: -1.i1+2.i2-23.i3=+0---------------"RESET"|\n");
+    printf("============================================================\n");
 
     //insirindo as equações;
     for (int i = 0; i < 3; i++)
@@ -118,11 +124,24 @@ int validaEquacao(char x[]){
     
     for (int i = 0; i < tamanho; i++)
     {
+        //verifica se há tensão;
+        if (x[i] == '=' && tamanho < i+3){
+            printf("Equação invalida, nada depois de '='!\n");
+            return 0;            
+        }
+
         //conta a quantidade de pontos;
         if (x[i] == '.' && x[i+1] != '.' && x[i-1] != '.')
         {
             ponto++;
-        }     
+        }    
+
+        //testa se há pontos juntos;
+        if (x[i] == '.' && (x[i+1] == '.' || x[i] != '.'))
+        {
+            printf("Equação invalida!\n");
+            return 0;
+        }
 
         //conta a quantidade dos sinais;
         if (x[i] == '+' || x[i] == '-')
@@ -142,23 +161,24 @@ int validaEquacao(char x[]){
     }
 
     //verifica se a quantidade de ponto achado é igual a 3;
+    
     if (ponto != 3)
     {
-        printf("Equação invalida!\n");
+        printf("Equação invalida, Lembrese do '.'!");
         return 0;
     }
 
     //verifica se a quantidade de sinal achado é igual a 4;
-    if (sinal != 3)
+    if (sinal > 4)
     {
          printf("Equação invalida, não esqueça dos sinais(+-) antes de cada numero!\n");
         return 0;
     }    
     
     //verifica se o codigo é muito pequeno ou muito grande;
-    if (tamanho <= 7 || tamanho >=  27)
+    if (tamanho <= 16 || tamanho >=  28)
     {
-        printf("Equação invalida!\n");
+        printf("Equação invalida, divergencia no tamanho!\n");
         return 0;
     }
     return 1;
@@ -201,16 +221,14 @@ void inv3()
 void input3(char y[], int qual)
 {
     //contador que define I:1,2,3 na matriz;
-    int contador = 0;
+    int contador = 0, semsinal = 0;
 
     //roda por toda a string
     for (int i = 0; i < strlen(y); i++)
     {
-        
         //procura por .
         if(y[i] == '.')
         {
-            
             pos[0] = i;//declara onde achou;
             contador++;//contador que define I:1,2,3 na matriz;
 
@@ -218,54 +236,71 @@ void input3(char y[], int qual)
             for (int j = 0; j < 5; j++)
             {
                 if (y[i-j] == '+' || y[i-j] == '-')
-                {   
+                {
                     //define quantidade de casas;
                     pos[1] = j;
+                }else if (i-j == 0)//se for a posição 0 da string;
+                {
+                    pos[1] = j;//define a posição;
+                    semsinal = 1;//se o numero não começou com + ou -;
+                    break;
                 }
             }
 
             posn = pos[0] - pos[1];//define a posição incial do que achou;
-            //printf("\npos[0] = %d;\n pos[1] = %d\n posf = %d\n x = %d\n", pos[0], pos[1], posn, strlen(y)-posn);
 
             //inicializa variavel temporaria que armazena char que será transformado em int;
             char temp[pos[1]+1];
 
-            //define temp com as posições que achou;
-            for (int k = posn; k < posn + pos[1]; k++)
+            if (semsinal == 1)//se for sem sinal;
             {
-                temp[k-posn] = y[k];
-                //printf("\n\ttemp[%d] = %c", k-posn, y[k]);
+                temp[0] = '+'; //coloca um + na primeira posição;
+                int contador = 0;//imicializa contador;
+
+                while(contador < pos[1])//enquanto contador menor que pos[1];
+                {
+                    temp[contador+1] = y[contador];//temp quecebe partindo de 1;
+                    contador++;
+                }
+                temp[pos[1]+1] = '\0';//fecha a temp;
+                semsinal = 0;
+                
+            }else //caso não seja sem o sinal;
+            {
+                //define com as posições que achou;
+                for (int k = posn; k <= posn + pos[1]; k++)
+                {
+                    temp[k-posn] = y[k];
+                }
+
+                temp[pos[1]] = '\0';
             }
 
-            //fecha a string;
-            temp[pos[1]] = '\0';
-                 
             //transforma de sting para int;
-            I[qual][contador-1] = stoi3(temp);
+            I[qual][contador-1] = stoi(temp);
 
-            //printf("\nqual = %d, contador = %d", qual, contador);
-            //printf("\n I[%d][%d] = %d\n", qual, contador-1, stoi3(temp));
         }
+
 
         //procura por '=';
         if (y[i] == '=')
-        {
-            //h = posição depois do '=';
+        { 
+            //h recebe a posição onde achou o '=' + 1;
             h = i+1; 
-
-            if (y[h] != '+' && y[h] != '-')
-            {
+            
+            //se não começou com + ou -;
+            if (y[h] != '+' && y[h] != '-'){
+                
+                //define o inicio em '=';
                 h = i;
-            } 
+
+            }            
             
             //marcador guardara o tamanho do char que chegou
             int marcador = (strlen(y)-h)-1;
 
             //inicializa variavel que armazena char que será transformado em int;
-            char x[marcador+1];            
-            
-            //printa quantas posiçoes foram criadas no vetor x;
-            //printf("\nX tem[%d]\n", marcador);
+            char x[marcador+1];
 
             //define x com os valores apos '=';
             for (int j = 0; j < marcador; j++)
@@ -328,7 +363,6 @@ int stoi3(char *x)
     }return menos;//retorna o numero positivo;
     
 }
-
 
 //multiplica as matriz;
 void result3()

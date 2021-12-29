@@ -7,9 +7,11 @@ void AbreLog(){
 
     FILE *pfile;
     FILE *pfile2;
+    FILE *pfile3;
 
     pfile = fopen("Log_eq3.txt", "w");   
     pfile2 = fopen("Log_eq2.txt", "w");
+    pfile3 = fopen("Log_Alg.txt", "w");
 
     if (pfile == NULL)
     {
@@ -25,9 +27,12 @@ void AbreLog(){
     
     fprintf(pfile, "--------------------Histórico---------------------");
     fprintf(pfile2, "--------------------Histórico---------------------");
+    fprintf(pfile3, "--------------------Histórico---------------------");
 
-    fclose(pfile2);
     fclose(pfile);
+    fclose(pfile2);
+    fclose(pfile3);    
+
 }
 
 //concatena int de 3 digitos;
@@ -43,9 +48,9 @@ int concatena(int c, int d, int u){
 // Transforma de string para int "char x[], é um ponteiro";
 int stoi(char *x)
 {
-    
+        
     //inicializa variaveis;
-    int teste[strlen(x)], menos, z = 0;
+    int teste[strlen(x)], menos, z = 0, sinal = 1;
 
     //verifica se o numero é negativo;
     if(x[0] == '-')
@@ -54,7 +59,7 @@ int stoi(char *x)
     }
 
     //for pulando a primeira posição do vetor passando char x para int teste;
-    for (int i = 1; i < strlen(x); i++)
+    for (int i = sinal; i < strlen(x); i++)
     {
         teste[i] = x[i]-48;//faz a conversão de cada posição do vetor para int(faz se -48 por causa da tabela ascii);
         //printf("\n\t\tteste[%d] = %d\n", i, teste[i]);

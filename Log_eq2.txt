@@ -1,17 +1,57 @@
 --------------------Histórico---------------------
- Matriz Corrente	32767	1
-	23	132
+ Matriz Corrente
+				1				2
+				-1				-2
 
 
- Matriz Tensão	1
-	123
+ Matriz Tensão
+				3
+				-3
 
- Determinante: 4325221
+ Determinante: 0
 
  Matriz Inversa
-	0.000031	-0.000000
-	-0.000005	0.007576
+				-inf				-inf
+				inf				inf
 
-	Corrente 1 = 0.000002
-	Corrente 2 = 0.931818
+ Corrente 1 = -nan
+ Corrente 2 = -nan
+-------------------------------------
+
+ Matriz Corrente
+				-999				-888
+				999				888
+
+
+ Matriz Tensão
+				-777
+				777
+
+ Determinante: 0
+
+ Matriz Inversa
+				inf				inf
+				-inf				-inf
+
+ Corrente 1 = -nan
+ Corrente 2 = -nan
+-------------------------------------
+
+ Matriz Corrente
+				-12				-13
+				12				13
+
+
+ Matriz Tensão
+				-14
+				14
+
+ Determinante: 0
+
+ Matriz Inversa
+				inf				inf
+				-inf				-inf
+
+ Corrente 1 = -nan
+ Corrente 2 = -nan
 -------------------------------------

@@ -2,6 +2,12 @@
 #include <string.h>
 #include <stdlib.h>
 
+#define RED       "\033[31m"
+#define YELLOW    "\033[33m"
+#define BLUE      "\033[34m"
+#define RESET     "\033[34m"
+#define GREEN     "\033[0;32m"
+
 void inv();
 int determinante();
 void result();
@@ -17,20 +23,21 @@ int equacao2(){
 
     system("clear");
     char string[100];
+    
+    printf("============================================================\n");
+    printf("|"GREEN"------------------Exemplo: 23.i1-06.i2=1------------------"RESET"|\n");
+    printf("============================================================\n");
 
     //inserindo as equacoes;
-    printf("Como usar: sinal(+-)número(0-999).i1sinal(+-)número(0-999).i2=sinal(+-)número(0-999)\n");
-    printf("Exemplo: +23.i1-06.i2=+00\n\n");
-
     for (int i = 0; i < 2; i++)
     {
         int valida = 0;
-        while (valida == 0)
+        while (valida == 0)//enquanto valida for 0;
         {
             printf("Informe a equacao - %d: ", i+1);
             fgets(string, sizeof(string)-2, stdin);
             
-            valida = validaEquacao2(string);
+            valida = validaEquacao2(string);//verifica erros em string se não encontrar erros retorna 1;
         }
         input(string, i);
     
@@ -60,22 +67,22 @@ void logeq2(){
     }
 
     //matriz Correntes;
-    fprintf(pfile, "\n Matriz Corrente");
+    fprintf(pfile, "\n Matriz Corrente\n");
     for (int x = 0; x < 2; x++)
     {
         for (int j = 0; j < 2; j++)
         {
-            fprintf(pfile, "\t%d", I[x][j]);
+            fprintf(pfile, "\t\t\t\t%d", I[x][j]);
         }
         fprintf(pfile, "\n");
     }
     fprintf(pfile, "\n");
 
     //matriz Tensoes;
-    fprintf(pfile, "\n Matriz Tensão");
+    fprintf(pfile, "\n Matriz Tensão\n");
     for (int x = 0; x < 2; x++)
     {
-        fprintf(pfile, "\t%d", U[x]);
+        fprintf(pfile, "\t\t\t\t%d", U[x]);
         fprintf(pfile, "\n");
     } 
 
@@ -88,7 +95,7 @@ void logeq2(){
     {
         for (int j = 0; j < 2; j++)
         {
-            fprintf(pfile, "\t%Lf", x[i][j]);
+            fprintf(pfile, "\t\t\t\t%Lf", x[i][j]);
         }
         fprintf(pfile, "\n");
     }
@@ -98,7 +105,7 @@ void logeq2(){
     //resultado;
     for (int i = 0; i < 2; i++)
     {
-        fprintf(pfile,"\tCorrente %d = %Lf\n", i+1, a[0][i]);
+        fprintf(pfile," Corrente %d = %Lf\n", i+1, a[0][i]);
     }
 
     fprintf(pfile, "-------------------------------------");
@@ -114,19 +121,31 @@ int validaEquacao2(char x[]){
     
     for (int i = 0; i < tamanho; i++)
     {
+        //verifica se há tensão;
+        if (x[i] == '=' && tamanho < i+3){
+            printf("Equação invalida, nada depois de '='!\n");
+            return 0;            
+        }
+
         //conta a quantidade de pontos;
         if (x[i] == '.' && x[i+1] != '.' && x[i-1] != '.')
         {
             ponto++;
         }     
 
+        //testa se há pontos juntos;
+        if (x[i] == '.' && (x[i+1] == '.' || x[i] != '.'))
+        {
+            printf("Equação invalida!\n");
+            return 0;
+        }
+        
         //conta a quantidade dos sinais;
         if (x[i] == '+' || x[i] == '-')
         {
             sinal++;
         }
        
-
         //procura por espaços;
         if (x[i] == ' ')
         {
@@ -134,25 +153,24 @@ int validaEquacao2(char x[]){
             return 0;
         }
         
-           
     }
 
-    //verifica se a quantidade de ponto achado é igual a 3;
+    //verifica se a quantidade de ponto achado é igual a 2;
     if (ponto != 2)
     {
-        printf("Equação invalida!\n");
+        printf("Equação invalida, Lembrese do '.'!\n");
         return 0;
     }
 
-    //verifica se a quantidade de sinal achado é igual a 4;
-    if (sinal != 2)
+    //verifica se a quantidade de sinal menor 3 maior 1;
+    if (sinal > 3)
     {
-         printf("Equação invalida, não esqueça dos sinais(+-) antes de cada numero!\n");
+        printf("Equação invalida, erro com sinais(+-)!\n");
         return 0;
-    }    
+    }
     
     //verifica se o codigo é muito pequeno ou muito grande;
-    if (tamanho <= 14 || tamanho >=  21)
+    if (tamanho <= 11 || tamanho >=  21)
     {
         printf("Equação invalida, divergencia no tamanho!\n");
         return 0;
@@ -160,7 +178,6 @@ int validaEquacao2(char x[]){
     return 1;
 
 }
-
 
 //calcula a determinante;
 int determinante()
@@ -203,16 +220,14 @@ void result()
 void input(char y[], int qual)
 {
     //contador que define I:1,2,3 na matriz;
-    int contador = 0;
+    int contador = 0, semsinal = 0;
 
     //roda por toda a string
     for (int i = 0; i < strlen(y); i++)
     {
-        
         //procura por .
         if(y[i] == '.')
         {
-            
             pos[0] = i;//declara onde achou;
             contador++;//contador que define I:1,2,3 na matriz;
 
@@ -220,54 +235,69 @@ void input(char y[], int qual)
             for (int j = 0; j < 5; j++)
             {
                 if (y[i-j] == '+' || y[i-j] == '-')
-                {   
+                {
                     //define quantidade de casas;
                     pos[1] = j;
+                }else if (i-j == 0)//se for a posição 0 da string;
+                {
+                    pos[1] = j;//define a posição;
+                    semsinal = 1;//se o numero não começou com + ou -;
+                    break;
                 }
             }
 
             posn = pos[0] - pos[1];//define a posição incial do que achou;
 
-            //printf("\npos[0] = %d;\n pos[1] = %d\n posf = %d\n x = %d\n", pos[0], pos[1], posn, strlen(y)-posn);
-
             //inicializa variavel temporaria que armazena char que será transformado em int;
             char temp[pos[1]+1];
 
-            //define com as posições que achou;
-            for (int k = posn; k < posn + pos[1]; k++)
+            if (semsinal == 1)//se for sem sinal;
             {
-                temp[k-posn] = y[k];
-                //printf("\n\ttemp[%d] = %c", k-posn, y[k]);
+                temp[0] = '+'; //coloca um + na primeira posição;
+                int contador = 0;//imicializa contador;
+
+                while(contador < pos[1])//enquanto contador menor que pos[1];
+                {
+                    temp[contador+1] = y[contador];//temp quecebe partindo de 1;
+                    contador++;
+                }
+                temp[pos[1]+1] = '\0';//fecha a temp;
+                semsinal = 0;
+                
+            }else //caso não seja sem o sinal;
+            {
+                //define com as posições que achou;
+                for (int k = posn; k <= posn + pos[1]; k++)
+                {
+                    temp[k-posn] = y[k];
+                }
+
+                temp[pos[1]] = '\0';
             }
 
-            temp[pos[1]] = '\0';
-                 
             //transforma de sting para int;
             I[qual][contador-1] = stoi(temp);
 
-            //printf("\nqual = %d, contador = %d", qual, contador);
-            //printf("\n I[%d][%d] = %d\n", qual, contador-1, stoi(temp));
         }
 
         //procura por '=';
         if (y[i] == '=')
         { 
-            //h = posição depois do '=';
+            //h recebe a posição onde achou o '=' + 1;
             h = i+1; 
-
-            if (y[h] != '+' && y[h] != '-')
-            {
-                h = i;
-            } 
             
+            //se não começou com + ou -;
+            if (y[h] != '+' && y[h] != '-'){
+                
+                //define o inicio em '=';
+                h = i;
+            }
+
             //marcador guardara o tamanho do char que chegou
             int marcador = (strlen(y)-h)-1;
 
             //inicializa variavel que armazena char que será transformado em int;
             char x[marcador];
-            
-            //printa quantas posiçoes foram criadas no vetor x;
-            //printf("\nX tem[%d]\n", marcador);
 
             //define x;
             for (int j = 0; j < marcador; j++)
@@ -277,6 +307,7 @@ void input(char y[], int qual)
 
             }
 
+            //redefine o final da string;
             x[marcador] = '\0';
 
             //chama stoi(x), para transformar em int[];
